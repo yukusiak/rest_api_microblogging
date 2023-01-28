@@ -48,7 +48,7 @@ class Post extends Model
     {
 
         $posts = $this::select('user_id', 'publish_date')
-            ->selectRaw('IFNULL(IF(TIMESTAMPDIFF(day, publish_date, LAG(publish_date, 1)
+            ->selectRaw('IFNULL(IF(TIMESTAMPDIFF(hour, publish_date, LAG(publish_date, 1)
                   OVER (PARTITION BY user_id ORDER BY publish_date DESC))>?,0,1),0) AS delta ', [$period]);
 
         $subA1 = DB::table(DB::raw("({$this::bindValueToSQL($posts)}) a1"))
